@@ -1,0 +1,14 @@
+{
+
+ "CaseNumber": "00001026",
+  "Subject": "New Case",
+  "Description": "This is a new case.",
+  "Status": "New",
+  "Priority": "Low",
+  "CreatedDate": "2023-10-21T11:00:00Z",
+  "LastModifiedDate": "2023-10-21T11:00:00Z",
+  "Sync_new_record_to_db": "true",
+  "Sync_update_record_to_db": "true",
+  "External_Id": "12345",
+  "Owner_Id":"0055j0000080amaAAA"
+}

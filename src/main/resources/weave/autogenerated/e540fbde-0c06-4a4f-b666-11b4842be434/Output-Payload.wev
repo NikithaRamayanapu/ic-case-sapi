@@ -1,0 +1,11 @@
+%dw 2.0
+
+type auto_e540fbde_0c06_4a4f_b666_11b4842be434_Output_Payload = {
+  owner_Id?: String, 
+  subject?: String, 
+  description?: String, 
+  priority?: String, 
+  status?: String, 
+  _?: Any
+} {"description": "retrieving single case details"}
+

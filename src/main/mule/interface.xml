@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd  http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+    <apikit:config name="ic_case_sfdc-config" api="ic_case_sfdc.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <flow name="ic_case_sfdc-main">
+        <http:listener config-ref="ic_case_sfdc-httpListenerConfig1" path="/api/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:router config-ref="ic_case_sfdc-config" />
+        <error-handler ref="Error_Handler" />
+    </flow>
+    <flow name="ic_case_sfdc-console">
+        <http:listener config-ref="ic_case_sfdc-httpListenerConfig1" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="ic_case_sfdc-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="put:\case:application\json:ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="03d45083-d135-49cf-9c00-2ac7d83aa38f" name="update-case-implementationFlow" />
+    </flow>
+    <flow name="delete:\case\(id):ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="f1fa0aff-634b-4d36-a6c1-335c0719ce52" name="delete-case-implementationFlow" />
+    </flow>
+    <flow name="get:\case:ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="a5f2386a-4830-4360-85d7-7a93b07eca75" name="get-all-cases-implementationFlow" />
+    </flow>
+    <flow name="get:\case\(id):ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="fcde38d6-5861-46b3-930b-883d2fad5798" name="get-by-id-implementationFlow1" />
+    </flow>
+    <flow name="post:\case:application\json:ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="0a99cb82-ebf6-41c5-97d6-decb59e9a46a" name="creating-new-case-implementationFlow" />
+    </flow>
+    <flow name="put:\case\(id):application\json:ic_case_sfdc-config">
+        <flow-ref doc:name="Flow Reference" doc:id="a4d832f0-eb0f-49e7-8417-ab8cbb2a9f2f" name="update-case-by-id-implementationFlow" />
+    </flow>
+</mule>

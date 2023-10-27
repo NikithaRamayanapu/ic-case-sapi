@@ -1,0 +1,42 @@
+[
+  {
+    "Id": "0055j0000080amaAAA",
+    "CaseNumber": "00001026",
+    "Subject": "New Case",
+    "Description": "This is a new case.",
+    "Status": "New",
+    "Priority": "Low",
+    "CreatedDate": "2023-10-21T11:00:00Z",
+    "LastModifiedDate": "2023-10-21T11:00:00Z",
+    "Sync_new_record_to_db": "true",
+    "Sync_update_record_to_db": "true",
+    "External_Id": "12345"
+ },
+ {
+    "Id": "0055j0000080amaAAA",
+    "CaseNumber": "00001026",
+    "Subject": "New Case",
+    "Description": "This is a new case.",
+    "Status": "New",
+    "Priority": "High",
+    "CreatedDate": "2023-10-21T11:00:00Z",
+    "LastModifiedDate": "2023-10-21T11:00:00Z",
+    "Sync_new_record_to_db": "true",
+    "Sync_update_record_to_db": "true",
+    "External_Id": "145890"
+ },
+ {
+    "Id": "0055j0000080amaAAA",
+    "CaseNumber": "00001026",
+    "Subject": "New Case",
+    "Description": "This is a new case.",
+    "Status": "New",
+    "Priority": "Medium",
+    "CreatedDate": "2023-10-21T11:00:00Z",
+    "LastModifiedDate": "2023-10-21T11:00:00Z",
+    "Sync_new_record_to_db": "true",
+    "Sync_update_record_to_db": "true",
+    "External_Id": "2345675"
+ }
+
+]

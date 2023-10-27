@@ -1,0 +1,62 @@
+#%RAML 1.0 Library
+types:
+  update_case:
+    description: creating new case
+    type: object
+    properties:
+        owner_Id:
+          description: owner Id
+          type: string
+          required: true
+       
+        priority:
+          description: priority of the case
+          type: string
+          required: false
+        
+        description:
+          description: description of the case
+          type: string
+          required: false
+    
+        status:
+          description: status of the case
+          type: string
+          required: false
+        subject:
+          description: subject of the case
+          type: string
+          required: false
+        sync_update_record_to_db:
+          description: updating new case
+          type: string
+          required: false
+        sync_new_record_to_db:
+          description: creating new case
+          type: string
+          required: false
+        external_id:
+          description: external id of the case
+          type: string
+          required: false     
+  update_case_response:
+    description: Pick Release Response
+    properties:
+      is_success :
+        description: Success
+        type: boolean
+        required: true
+      errors:
+        type: array
+        description: Errors
+        required: false
+        items:
+          properties:
+            error_code:
+              type: string
+              description: Unique error code
+              required: false
+            error_message:
+              type: string
+              description: Indicates a message associated with its error code.
+              required: false              

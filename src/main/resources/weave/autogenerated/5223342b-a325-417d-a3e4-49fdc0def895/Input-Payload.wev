@@ -1,0 +1,7 @@
+%dw 2.0
+
+type auto_5223342b_a325_417d_a3e4_49fdc0def895_Input_Payload = {
+  Id?: String, 
+  _?: Any
+} {"description": "updating an case"}
+

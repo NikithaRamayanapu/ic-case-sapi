@@ -1,0 +1,11 @@
+%dw 2.0
+
+type auto_1dbee0f1_fa00_446f_aa26_ee187ca875d3_Output_Payload = {
+  owner_Id?: String, 
+  subject?: String, 
+  description?: String, 
+  priority?: String, 
+  status?: String, 
+  _?: Any
+} {"description": "updating an case"}
+

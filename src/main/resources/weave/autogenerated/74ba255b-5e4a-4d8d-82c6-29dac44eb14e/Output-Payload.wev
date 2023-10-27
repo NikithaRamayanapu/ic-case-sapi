@@ -1,0 +1,10 @@
+%dw 2.0
+
+type auto_74ba255b_5e4a_4d8d_82c6_29dac44eb14e_Output_Payload = {
+  result?: Array<Any>, 
+  is_success: Boolean, 
+  errors: Array<{    error_message?: String,     error_code?: String,     _?: Any  }> {"description": "Errors"}, 
+  salesforce_id?: String, 
+  _?: Any
+}
+

@@ -1,0 +1,27 @@
+#%RAML 1.0 Library
+types:
+  delete:
+    properties:
+      is_success :
+        description: Success
+        type: boolean
+        required: true
+     
+      result :
+        description: 
+        type: array
+        required: false
+      
+      errors:
+        type: array
+        description: Errors
+        items:
+          properties:
+            error_code:
+              type: string
+              description: Unique error code
+              required: false
+            error_message:
+              type: string
+              description: Indicates a message associated with its error code.
+              required: false

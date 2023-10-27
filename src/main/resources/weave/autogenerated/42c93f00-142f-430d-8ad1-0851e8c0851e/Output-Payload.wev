@@ -1,0 +1,8 @@
+%dw 2.0
+
+type auto_42c93f00_142f_430d_8ad1_0851e8c0851e_Output_Payload = {
+  is_success: Boolean, 
+  errors?: Array<{    error_message?: String,     error_code?: String,     _?: Any  }> {"description": "Errors"}, 
+  _?: Any
+} {"description": "Pick Release Response"}
+

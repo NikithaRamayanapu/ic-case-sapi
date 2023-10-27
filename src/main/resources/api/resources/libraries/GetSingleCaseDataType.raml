@@ -1,0 +1,38 @@
+#%RAML 1.0 Library
+types:
+  Single_case_details:
+    description: retrieving single case details
+    type: object
+    properties:
+        owner_Id:
+          description: owner Id
+          type: string
+          required: false
+        priority:
+          description: priority of the case
+          type: string
+          required: false
+        description:
+          description: description of the case
+          type: string
+          required: false
+        status:
+          description: status of the case
+          type: string
+          required: false
+        subject:
+          description: subject of the case
+          type: string
+          required: false
+        sync_update_record_to_db:
+          description: updating new case
+          type: string
+          required: false
+        sync_new_record_to_db:
+          description: creating new case
+          type: string
+          required: false
+        external_id:
+          description: external id of the case
+          type: string
+          required: false     

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	
+	 <http:listener-config name="ic_case_sfdc-httpListenerConfig1">
+        <http:listener-connection host="${https.host}" port="${https.port}" protocol="HTTPS">
+            <tls:context>
+                <tls:key-store type="jks" path="keystore/server-keystore.jks" keyPassword="mulesoft" password="mulesoft" alias="mule-server" />
+            </tls:context>
+        </http:listener-connection>
+         </http:listener-config>
+          
+    <configuration-properties doc:name="Configuration properties" doc:id="8342823c-fa7d-48f4-9d1a-c45e09dccaba" file="properties\config-common.yaml" />
+    <configuration-properties doc:name="Configuration properties" doc:id="dddab2ae-1d64-4003-a710-6e1e5f094b8e" file="properties\config-dev.yaml" />
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="45ecb517-d734-4f45-8653-1f89deb87c61" >
+		<salesforce:basic-connection username="${secure::username}" password="${secure::password}" securityToken="${secure::securitytoken}" />
+	</salesforce:sfdc-config>
+	<secure-properties:config name="Secure_Properties_Config1" doc:name="Secure Properties Config" doc:id="b2269de5-9473-4b7c-88ab-235e5c01b954" file="properties\config-dev.yaml" key="key" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="48d8d647-2c60-44a5-b52d-0784909c3759" flowRef="ic_case_sfdc-main" />
+	
+</mule>

@@ -1,0 +1,76 @@
+#%RAML 1.0
+title: ic_case_sfdc
+description: package with collection of Sf System APIs for IC integration
+traits:
+  headers:
+    !include /traits/trait.raml
+  trackingParams:
+    headers:
+      X-Correlation-ID:
+        description: A unique identifier for this message, to enable tracking, reporting, and correlation.
+        type: string
+        required: true
+resourceTypes:
+  Collection: !include /resourceTypes/Collection.raml
+uses:
+  errorDataType:  /resources/libraries/ErrorDataType.raml
+  getAllCases: /resources/libraries/GetAllCasesDataType.raml
+  getSingleCase: /resources/libraries/GetSingleCaseDataType.raml
+  updateCase: /resources/libraries/UpdateCaseDataType.raml
+  newCase: /resources/libraries/NewCase.raml
+  deleteDataTypes: /resources/libraries/DeleteDataType.raml
+/case:
+  is: [headers,trackingParams]  
+  description: used to add new task
+  type:
+    Collection:
+      post-request-schema:
+          newCase.add_new_case
+      post-request-example: 
+        !include /examples/request/createCaseExample.json
+      post-response-schema: 
+        newCase.case_added_response
+      post-response-example: 
+        !include /examples/responses/CaseCreationExample.json
+      get-response-schema: 
+        getAllCases.get_all_cases_response
+      get-response-example: 
+        !include /examples/responses/getAllCasesExample.json
+      
+
+      errors-schema: errorDataType.error
+  get:
+  post:
+  
+  /{id}:
+    is: [headers,trackingParams]
+    description: used to retrieve single case details
+    uriParameters:
+      id:
+        required: true
+        type: string
+        minLength: 5
+    type:
+      Collection:
+        get-response-schema:
+          getSingleCase.Single_case_details
+        get-response-example: 
+          !include /examples/responses/getSingleCaseExample.json
+        delete-response-schema: 
+          deleteDataTypes.delete
+        delete-response-example: 
+          !include /examples/responses/CaseDeletionExample.json
+        put-request-schema: 
+         updateCase.update_case
+        put-request-example: 
+         !include /examples/request/updateCaseExample.json  
+        put-response-schema: 
+         updateCase.update_case_response
+        put-response-example:
+         !include /examples/responses/CaseUpdationExample.json 
+        errors-schema: errorDataType.error
+    get:
+    delete:
+    put:
+          
+                                  
