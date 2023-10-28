@@ -2,6 +2,8 @@
 output application/json
 ---
 {
-  is_success: true,
-  errors: []
+        "is_success": payload.items.successful,
+    "response": payload.items map(item,index) ->{
+        "payload": item.payload
+    }
 }

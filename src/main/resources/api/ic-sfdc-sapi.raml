@@ -1,6 +1,6 @@
 #%RAML 1.0
-title: ic_case_sfdc
-description: package with collection of Sf System APIs for IC integration
+title: ic-sfdc-sapi
+description: Designing an api for case object in salesforce
 traits:
   headers:
     !include /traits/trait.raml
@@ -13,15 +13,15 @@ traits:
 resourceTypes:
   Collection: !include /resourceTypes/Collection.raml
 uses:
-  errorDataType:  /resources/libraries/ErrorDataType.raml
-  getAllCases: /resources/libraries/GetAllCasesDataType.raml
-  getSingleCase: /resources/libraries/GetSingleCaseDataType.raml
-  updateCase: /resources/libraries/UpdateCaseDataType.raml
-  newCase: /resources/libraries/NewCase.raml
-  deleteDataTypes: /resources/libraries/DeleteDataType.raml
+  errorDataType:  /resources/libraries/errorDataType.raml
+  getAllCases: /resources/libraries/getAllCasesDataType.raml
+  getSingleCase: /resources/libraries/getSingleCaseDataType.raml
+  updateCase: /resources/libraries/updateCaseDataType.raml
+  newCase: /resources/libraries/postDataType.raml
+  deleteDataTypes: /resources/libraries/deleteDataType.raml
 /case:
   is: [headers,trackingParams]  
-  description: used to add new task
+  description: used to add new case
   type:
     Collection:
       post-request-schema:
@@ -31,7 +31,7 @@ uses:
       post-response-schema: 
         newCase.case_added_response
       post-response-example: 
-        !include /examples/responses/CaseCreationExample.json
+        !include /examples/responses/caseCreationExample.json
       get-response-schema: 
         getAllCases.get_all_cases_response
       get-response-example: 
@@ -40,7 +40,9 @@ uses:
 
       errors-schema: errorDataType.error
   get:
+    description: used to fetch case object from salesforce
   post:
+    description: For creating a new case object in salesforce
   
   /{id}:
     is: [headers,trackingParams]
@@ -59,7 +61,7 @@ uses:
         delete-response-schema: 
           deleteDataTypes.delete
         delete-response-example: 
-          !include /examples/responses/CaseDeletionExample.json
+          !include /examples/responses/caseDeletionExample.json
         put-request-schema: 
          updateCase.update_case
         put-request-example: 
@@ -67,10 +69,13 @@ uses:
         put-response-schema: 
          updateCase.update_case_response
         put-response-example:
-         !include /examples/responses/CaseUpdationExample.json 
+         !include /examples/responses/caseUpdationExample.json 
         errors-schema: errorDataType.error
     get:
+      description: fetching a single case object from salesforce
     delete:
+      description: deleting a case in salesforce
     put:
+      description: updating a case in salesforce
           
                                   

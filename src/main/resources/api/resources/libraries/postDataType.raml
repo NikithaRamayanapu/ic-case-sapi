@@ -46,17 +46,14 @@ types:
         description: Success
         type: boolean
         required: true
-      errors:
+      response:
         type: array
-        description: Errors
-        required: false
         items:
+          type: object
           properties:
-            error_code:
-              type: string
-              description: Unique error code
-              required: false
-            error_message:
-              type: string
-              description: Indicates a message associated with its error code.
-              required: false   
+           payload:
+            type: object
+            properties:
+              success: boolean
+              id: string
+              errors: array
