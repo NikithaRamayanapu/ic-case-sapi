@@ -7,7 +7,7 @@
 	<version>1.0.13-SNAPSHOT</version>
 	<packaging>mule-application</packaging>
 
-	<name>ic-case-sfdc</name>
+	<name>ic-sfdc-sapi</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

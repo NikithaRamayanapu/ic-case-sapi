@@ -6,7 +6,7 @@
   "priority": "Low",
   "sync_new_record_to_db": "true",
   "sync_update_record_to_db": "true",
-  "external_Id": "12345",
-  "owner_Id":"0055j0000080amaAAA"
+  "external_id": 12345,
+  "owner_id":"0055j0000080amaAAA"
  
 }

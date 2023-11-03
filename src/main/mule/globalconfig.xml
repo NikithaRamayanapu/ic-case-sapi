@@ -28,5 +28,6 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
 	<api-gateway:autodiscovery apiId="${api.id}" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="48d8d647-2c60-44a5-b52d-0784909c3759" flowRef="ic_case_sfdc-main" />
+	<configuration doc:name="Configuration" doc:id="8d293567-3280-4773-ba19-37e4fe33be9c" defaultErrorHandler-ref="Error_Handler" />
 	
 </mule>

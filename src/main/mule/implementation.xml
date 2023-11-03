@@ -6,17 +6,17 @@
 http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="get-all-cases-implementationFlow" doc:id="c42e4930-ccbd-4114-aa8d-85b7f19a0650" >
-		<logger level="INFO" doc:name="get all cases flow started" doc:id="865fb87a-2644-403c-a501-9f414bdb4a5f" message="get flow started" />
-		<salesforce:query-all doc:name="retrive all cases from salesforce" doc:id="b8489b50-568e-4e62-a2bf-8a743ffa5ed8" config-ref="Salesforce_Config" >
-			<salesforce:salesforce-query ><![CDATA[SELECT AccountId,AssetId,CaseNumber,ClosedDate,Comments,ContactEmail,ContactFax,ContactId,ContactMobile,ContactPhone,CreatedById,CreatedDate,Description,EngineeringReqNumber__c,External_Id__c,Id,IsClosed,IsDeleted,IsEscalated,LastModifiedById,LastModifiedDate,LastReferencedDate,LastViewedDate,MasterRecordId,Origin,OwnerId,ParentId,PotentialLiability__c,Priority,Product__c,Reason,SLAViolation__c,SourceId,Status,Subject,SuppliedCompany,SuppliedEmail,SuppliedName,SuppliedPhone,Sync_new_record_to_db__c,Sync_update_record_to_dc__c,SystemModstamp,Type FROM Case]]></salesforce:salesforce-query>
+		<logger level="INFO" doc:name="Get all cases flow started" doc:id="865fb87a-2644-403c-a501-9f414bdb4a5f" message="Get flow started" />
+		<salesforce:query-all doc:name="Retrive all cases from salesforce" doc:id="b8489b50-568e-4e62-a2bf-8a743ffa5ed8" config-ref="Salesforce_Config" >
+			<salesforce:salesforce-query ><![CDATA[SELECT AccountId,AssetId,CaseNumber,ClosedDate,Comments,ContactEmail,ContactFax,ContactId,ContactMobile,ContactPhone,CreatedById,CreatedDate,Description,EngineeringReqNumber__c,External_Id__c,Id,IsClosed,IsDeleted,IsEscalated,LastModifiedById,LastModifiedDate,LastReferencedDate,LastViewedDate,MasterRecordId,Origin,OwnerId,ParentId,PotentialLiability__c,Priority,Product__c,Reason,SLAViolation__c,SourceId,Status,Subject,SuppliedCompany,SuppliedEmail,SuppliedName,SuppliedPhone,Sync_new_record_to_db__c,Sync_update_record_to_db__c,SystemModstamp,Type FROM Case]]></salesforce:salesforce-query>
 		</salesforce:query-all>
 		<ee:transform doc:name="DW set to get all cases response" doc:id="76735d3e-39b3-4dca-88cb-3a092e1e14a8" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/togetallcases.dwl" />
+				<ee:set-payload resource="dwlScripts/togetallcases.dwl" />
 				
 			</ee:message>
 		</ee:transform>
-		<ee:transform doc:name="Transform Message1" doc:id="ae0b2f00-5bed-405d-9305-693979efb75f" >
+		<ee:transform doc:name="Response of get all cases" doc:id="ae0b2f00-5bed-405d-9305-693979efb75f" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
 output application/json
@@ -24,107 +24,69 @@ output application/json
 payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="get all cases flow ended" doc:id="c4605a29-45fb-4af9-a4d7-db2eaa67b872" message="get flow ended" />
+		<logger level="INFO" doc:name="Get all cases flow ended" doc:id="c4605a29-45fb-4af9-a4d7-db2eaa67b872" message="Get all cases flow ended" />
 	</flow>
 	<flow name="creating-new-case-implementationFlow" doc:id="42c93f00-142f-430d-8ad1-0851e8c0851e" >
-		<logger level="INFO" doc:name="create flow started" doc:id="319996e8-0d86-40d0-b035-58317c49960a" message="create flow started"/>
+		<logger level="INFO" doc:name="Create flow started" doc:id="319996e8-0d86-40d0-b035-58317c49960a" message="Create flow started"/>
 		<ee:transform doc:name="DW for creating a new case" doc:id="863a6d8d-18d6-4c53-9c25-70934b14e50e" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/totakeinputs.dwl" />
+				<ee:set-payload resource="dwlScripts/totakeinputs.dwl" />
 			
 			</ee:message>
 		</ee:transform>
-		<salesforce:create type="Case" doc:name="creates a new case in salesforce" doc:id="abd3db8f-b63e-419f-9ab5-aa8085c8375e" config-ref="Salesforce_Config" />
+		<salesforce:create type="Case" doc:name="Creates a new case in salesforce" doc:id="abd3db8f-b63e-419f-9ab5-aa8085c8375e" config-ref="Salesforce_Config" />
 		<ee:transform doc:name="DW for create case response" doc:id="5114e3bc-bd11-4351-99a2-cc87b49cc1e4" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/togivecreatecaseresponse.dwl" />
+				<ee:set-payload resource="dwlScripts/togivecreatecaseresponse.dwl" />
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="create flow ended" doc:id="faa7496c-a361-467e-93c1-c21a553c8c58" message="Flow ended" />
-	</flow>
-	<flow name="update-case-implementationFlow" doc:id="1dbee0f1-fa00-446f-aa26-ee187ca875d3" >
-		<logger level="INFO" doc:name="update case flow started" doc:id="ca6a7c60-d15e-4090-a9c4-f741456fc483" message="update case flow started" />
-		<ee:transform doc:name="Transform Message" doc:id="e6e39c51-01ad-47e1-bacd-67f9daf324bd" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/java
----
-payload map (item, index) ->
-[{
-	CaseNumber: item.CaseNumber,
-	Subject: item.Subject,
-	Description: item.Description,
-	Id: item.Id,
-	Priority: item.Priority,
-	CreatedDate: item.CreatedDate,
-	lastModifiedDate: item.lastModifiedDate,
-	Sync_new_record_to_db__c: item.Sync_new_record_to_db,
-	Sync_update_record_to_db__c: item.Sync_new_record_to_db,
-	External_Id__c: item.External_Id
-}]]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<salesforce:update type="Case" doc:name="Update case in salesforce" doc:id="35341481-b7a1-4f36-9d08-4f85f5b2a475" config-ref="Salesforce_Config" />
-		<ee:transform doc:name="Transform Message" doc:id="84a972bc-fe8a-42ab-bff0-39d9b9908152" >
-			<ee:message >
-				<ee:set-payload ><![CDATA[%dw 2.0
-output application/json
----
-payload]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-		<logger level="INFO" doc:name="Update case flow ended" doc:id="121a16e9-f9ea-4d97-9992-a9de1f9f1348" message="flow ended" />
+		<logger level="INFO" doc:name="Create flow ended" doc:id="faa7496c-a361-467e-93c1-c21a553c8c58" message="Create flow ended" />
 	</flow>
 	<flow name="delete-case-implementationFlow" doc:id="74ba255b-5e4a-4d8d-82c6-29dac44eb14e" >
-		<logger level="INFO" doc:name="delete case flow started" doc:id="390ae787-93e8-4f23-93c8-695130f6405b" message="flow started" />
-		<salesforce:query doc:name="query for selecting id from case object " doc:id="8028de7a-61dc-4966-9ad8-8fb903f8dcae" config-ref="Salesforce_Config" >
+		<logger level="INFO" doc:name="Delete case flow started" doc:id="390ae787-93e8-4f23-93c8-695130f6405b" message="Delete case flow started" />
+		<salesforce:query doc:name="Query for selecting id from case object " doc:id="8028de7a-61dc-4966-9ad8-8fb903f8dcae" config-ref="Salesforce_Config" >
 			<salesforce:salesforce-query ><![CDATA[SELECT Id,Status FROM Case where Id= ':id']]></salesforce:salesforce-query>
 			<salesforce:parameters ><![CDATA[#[{
 	"id": attributes.uriParams.id
 }]]]></salesforce:parameters>
 		</salesforce:query>
-		<ee:transform doc:name="Transform Message" doc:id="20c31b9f-56bb-4a7d-aabb-63c66dfe3e3d" >
-			<ee:variables >
-				<ee:set-variable variableName="id" ><![CDATA[attributes.uriParams.'id']]></ee:set-variable>
-			</ee:variables>
-		</ee:transform>
-		<salesforce:delete doc:name="delete case on salesforce" doc:id="c260da8f-8914-4e47-8db4-a0af3f596d5c" config-ref="Salesforce_Config" >
+		<salesforce:delete doc:name="Delete case on salesforce" doc:id="c260da8f-8914-4e47-8db4-a0af3f596d5c" config-ref="Salesforce_Config" >
 			<salesforce:ids ><![CDATA[#[payload.Id]]]></salesforce:ids>
 		</salesforce:delete>
 		<ee:transform doc:name="DW for delete case response" doc:id="638158eb-3d21-427f-aef8-dbf5e0fdc2e2" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/togiveresponse.dwl" />
+				<ee:set-payload resource="dwlScripts/togiveresponse.dwl" />
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="delete case flow ended" doc:id="82feebf9-fecb-4adf-95e8-cc7cb4dd27c6" message="Flow ended" />
+		<logger level="INFO" doc:name="Delete case flow ended" doc:id="82feebf9-fecb-4adf-95e8-cc7cb4dd27c6" message="Delete case flow ended" />
 	</flow>
 	<flow name="get-by-id-implementationFlow1" doc:id="e540fbde-0c06-4a4f-b666-11b4842be434" >
-		<logger level="INFO" doc:name="get by id flows tarted" doc:id="35be4ce0-5a00-494f-998e-b66dd74d5ef7" message="get by id flows tarted" />
-		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="0dc9807d-7c87-4a75-a82b-7e9424448789" variableName="id"/>
-		<salesforce:query doc:name="retriving a single case from salesforce" doc:id="feea3402-008c-48cf-97f4-c2d8381c8a3b" config-ref="Salesforce_Config" >
-			<salesforce:salesforce-query ><![CDATA[SELECT AccountId,AssetId,CaseNumber,ClosedDate,Comments,ContactEmail,ContactFax,ContactId,ContactMobile,ContactPhone,CreatedById,CreatedDate,Description,EngineeringReqNumber__c,External_Id__c,Id,IsClosed,IsDeleted,IsEscalated,LastModifiedById,LastModifiedDate,LastReferencedDate,LastViewedDate,MasterRecordId,Origin,OwnerId,ParentId,PotentialLiability__c,Priority,Product__c,Reason,SLAViolation__c,SourceId,Status,Subject,SuppliedCompany,SuppliedEmail,SuppliedName,SuppliedPhone,Sync_new_record_to_db__c,Sync_update_record_to_dc__c,SystemModstamp,Type FROM Case  where id=':id']]></salesforce:salesforce-query>
+		<logger level="INFO" doc:name="Get by id flow tarted" doc:id="35be4ce0-5a00-494f-998e-b66dd74d5ef7" message="Get by id flow tarted" />
+		<set-variable value="#[attributes.uriParams.id]" doc:name="To store the id" doc:id="0dc9807d-7c87-4a75-a82b-7e9424448789" variableName="id"/>
+		<salesforce:query doc:name="Retriving a single case from salesforce" doc:id="feea3402-008c-48cf-97f4-c2d8381c8a3b" config-ref="Salesforce_Config" >
+			<salesforce:salesforce-query ><![CDATA[SELECT AccountId,AssetId,CaseNumber,ClosedDate,Comments,ContactEmail,ContactFax,ContactId,ContactMobile,ContactPhone,CreatedById,CreatedDate,Description,EngineeringReqNumber__c,External_Id__c,Id,IsClosed,IsDeleted,IsEscalated,LastModifiedById,LastModifiedDate,LastReferencedDate,LastViewedDate,MasterRecordId,Origin,OwnerId,ParentId,PotentialLiability__c,Priority,Product__c,Reason,SLAViolation__c,SourceId,Status,Subject,SuppliedCompany,SuppliedEmail,SuppliedName,SuppliedPhone,Sync_new_record_to_db__c,Sync_update_record_to_db__c,SystemModstamp,Type FROM Case  where id=':id']]></salesforce:salesforce-query>
 			<salesforce:parameters ><![CDATA[#[{
 	"id": vars.id
 }]]]></salesforce:parameters>
 		</salesforce:query>
 		<ee:transform doc:name="DW To get single case response" doc:id="081a65c6-02ad-4b36-904e-b9efdecdd0fb" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/togetsinglecase.dwl" />
+				<ee:set-payload resource="dwlScripts/togetsinglecase.dwl" />
 			</ee:message>
 		</ee:transform>
-		<logger level="INFO" doc:name="get by id flows ended" doc:id="97ee1d2f-8cd3-4703-9681-5988551090ec" message="get by id flows ended" />
+		<logger level="INFO" doc:name="Get by id flow ended" doc:id="97ee1d2f-8cd3-4703-9681-5988551090ec" message="Get by id flow ended" />
 	</flow>
 	<flow name="update-case-by-id-implementationFlow" doc:id="5223342b-a325-417d-a3e4-49fdc0def895" >
-		<set-variable value="#[attributes.uriParams.id]" doc:name="Set Variable" doc:id="2fa04fdb-01bd-4951-859e-88d4000b6abe" variableName="id"/>
+		<set-variable value="#[attributes.uriParams.id]" doc:name="To store the id" doc:id="2fa04fdb-01bd-4951-859e-88d4000b6abe" variableName="id"/>
 		<ee:transform doc:name="DW to update case request" doc:id="86f0da9f-71bb-4434-8ac4-a1761e8a53b8" >
 			<ee:message >
-				<ee:set-payload resource="dwscript/totakeinputstomodify.dwl" />
+				<ee:set-payload resource="dwlScripts/totakeinputstomodify.dwl" />
 			</ee:message>
 		</ee:transform>
-		<salesforce:update type="Case" doc:name="updating a case in salesforce" doc:id="52b5ed4d-60b5-434c-827c-684cec3fc89d" config-ref="Salesforce_Config" />
+		<salesforce:update type="Case" doc:name="Updating a case in salesforce" doc:id="52b5ed4d-60b5-434c-827c-684cec3fc89d" config-ref="Salesforce_Config" />
 		<ee:transform doc:name="DW to update case response" doc:id="1b184357-6db5-41cf-82dd-f0221ce4bc56">
 			<ee:message>
-				<ee:set-payload resource="dwscript/togetresponseoftheupdate.dwl" />
+				<ee:set-payload resource="dwlScripts/togetresponseoftheupdate.dwl" />
 			</ee:message>
 		</ee:transform>
 	</flow>

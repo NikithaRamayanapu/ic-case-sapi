@@ -3,7 +3,7 @@ title: ic-sfdc-sapi
 description: Designing an api for case object in salesforce
 traits:
   headers:
-    !include /traits/trait.raml
+    !include /traits/Trait.raml
   trackingParams:
     headers:
       X-Correlation-ID:
@@ -13,12 +13,12 @@ traits:
 resourceTypes:
   Collection: !include /resourceTypes/Collection.raml
 uses:
-  errorDataType:  /resources/libraries/errorDataType.raml
-  getAllCases: /resources/libraries/getAllCasesDataType.raml
-  getSingleCase: /resources/libraries/getSingleCaseDataType.raml
-  updateCase: /resources/libraries/updateCaseDataType.raml
-  newCase: /resources/libraries/postDataType.raml
-  deleteDataTypes: /resources/libraries/deleteDataType.raml
+  errorDataType:  /resources/libraries/ErrorDataType.raml
+  getAllCases: /resources/libraries/GetAllCasesDataType.raml
+  getSingleCase: /resources/libraries/GetSingleCaseDataType.raml
+  updateCase: /resources/libraries/UpdateCaseDataType.raml
+  newCase: /resources/libraries/PostDataType.raml
+  deleteDataTypes: /resources/libraries/DeleteDataType.raml
 /case:
   is: [headers,trackingParams]  
   description: used to add new case
